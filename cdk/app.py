@@ -7,6 +7,7 @@ from cdk.cdk_stack import CdkStack
 
 
 app = cdk.App()
-CdkStack(app, "CdkStack")
+env = cdk.Environment(region="eu-central-1")
+CdkStack(app, "PostgresStack", env=env)
 
 app.synth()
