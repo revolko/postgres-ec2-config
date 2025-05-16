@@ -3,7 +3,17 @@ from aws_cdk import (
 )
 from constructs import Construct
 
-from aws_cdk.aws_ec2 import Vpc, IpAddresses, SubnetConfiguration, SubnetType
+from aws_cdk.aws_ec2 import (
+    Vpc,
+    IpAddresses,
+    SubnetConfiguration,
+    SubnetType,
+    Instance,
+    InstanceType,
+    InstanceClass,
+    InstanceSize,
+    MachineImage,
+)
 
 
 class CdkStack(Stack):
@@ -17,4 +27,10 @@ class CdkStack(Stack):
             subnet_configuration=[
                 SubnetConfiguration(name="public", subnet_type=SubnetType.PUBLIC, map_public_ip_on_launch=True),
             ]
+        )
+
+        Instance(
+            self, "PostgresInstance", vpc=vpc,
+            instance_type=InstanceType.of(instance_class=InstanceClass.T3, instance_size=InstanceSize.SMALL),
+            machine_image=MachineImage.generic_linux({"eu-central-1": "ami-03250b0e01c28d196"})
         )
